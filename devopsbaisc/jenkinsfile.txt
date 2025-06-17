@@ -1,0 +1,22 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git url: 'https://github.com/akshatsaxena7806/core_java.git', branch: 'main'
+            }
+        }
+
+        stage('Deploy Using Docker Compose') {
+            steps {
+                script {
+                    dir('devopsbaisc') {
+                        bat 'docker-compose down || docker-compose.exe down'
+                        bat 'docker-compose up -d --build || docker-compose.exe up -d --build'
+                    }
+                }
+            }
+        }
+    }
+}
